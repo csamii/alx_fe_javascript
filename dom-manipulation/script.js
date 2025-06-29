@@ -22,11 +22,43 @@ const quoteBtn = document.getElementById("newQuote");
 const formContainer = document.getElementById("formContainer");
 
 const saveQuotes = () => {
-  localStorage.setItem("quotes", JSON.stringify(quotes));
+    localStorage.setItem("quotes", JSON.stringify(quotes));
 }
 
 const quoteData = JSON.parse(localStorage.getItem("quotes")) || [];
 
+function exportToJsonFile() {
+    const dataString = JSON.stringify(quotes, null, 2);
+    const blob = new Blob([dataString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "quotes.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    try {
+      const importedQuotes = JSON.parse(event.target.result);
+
+      if (Array.isArray(importedQuotes)) {
+        quotes.push(...importedQuotes.filter(q => typeof q === "string" && q.trim()));
+        saveQuotes();
+        alert("Quotes imported successfully!");
+      } else {
+        alert("Invalid format: JSON must be an array of strings.");
+      }
+    } catch (err) {
+      alert("Error reading JSON file.");
+    }
+  };
+  fileReader.readAsText(event.target.files[0]);
+}
 
 // Display random quote
 const showRandomQuote = () => {
