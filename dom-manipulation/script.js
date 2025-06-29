@@ -25,6 +25,8 @@ const saveQuotes = () => {
   localStorage.setItem("quotes", JSON.stringify(quotes));
 }
 
+const quoteData = JSON.parse(localStorage.getItem("quotes")) || [];
+
 
 // Display random quote
 const showRandomQuote = () => {
