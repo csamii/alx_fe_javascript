@@ -28,14 +28,25 @@ const showRandomQuote = () => {
     quoteDisplay.innerHTML = `"${quotes[randomIndex].text}" — ${quotes[randomIndex].category}`;
 }
 
-function createAddQuoteForm() {
-  formContainer.innerHTML = `
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteBtn">Add Quote</button>
-  `;
+const createAddQuoteForm = () => {
+    const textInput = document.createElement("input");
+    textInput.type = "text";
+    textInput.id = "newQuoteText";
+    textInput.placeholder = "Enter a new quote";
 
-  document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
+    const categoryInput = document.createElement("input");
+    categoryInput.type = "text";
+    categoryInput.id = "newQuoteCategory";
+    categoryInput.placeholder = "Enter quote category";
+
+    const addButton = document.createElement("button");
+    addButton.textContent = "Add Quote";
+    addButton.id = "addQuoteBtn";
+    addButton.addEventListener("click", addQuote);
+
+    formContainer.appendChild(textInput);
+    formContainer.appendChild(categoryInput);
+    formContainer.appendChild(addButton);
 }
 
 const addQuote = () => {
