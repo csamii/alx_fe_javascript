@@ -1,4 +1,14 @@
-const quotes = [
+const displayQuote = document.getElementById("quoteDisplay");
+const quoteBtn = document.getElementById("newQuote");
+const formContainer = document.getElementById("formContainer");
+
+// Saving random quote in local storage
+const saveQuotes = () => {
+    localStorage.setItem("quotes", JSON.stringify(quotes));
+}
+
+// Upload quotes from local storage
+const quotes = JSON.parse(localStorage.getItem("quotes")) || [
     {
         category: "Inspiration",
         text: "Happiness is not something ready made. It comes from your own actions."
@@ -15,20 +25,24 @@ const quotes = [
         category: "Funny",
         text: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."
     }
-]
+];
 
-const displayQuote = document.getElementById("quoteDisplay");
-const quoteBtn = document.getElementById("newQuote");
-const formContainer = document.getElementById("formContainer");
-
-const saveQuotes = () => {
-    localStorage.setItem("quotes", JSON.stringify(quotes));
+const populateCategories = () => {
+    const categoryFilter = document.getElementById("categoryFilter");
+    quotes.map(category => {
+        const option = document.createElement("option");
+        option.value = category.category;
+        option.textContent = category.category;
+        categoryFilter.appendChild(option);
+    });
 }
 
-const quoteData = JSON.parse(localStorage.getItem("quotes")) || [];
+const filterQuotes = () => {
 
-function exportToJsonFile() {
-    const dataString = JSON.stringify(quotes, null, 2);
+}
+
+const exportToJsonFile = () => {
+    const dataString = JSON.stringify(quotes, null, 4);
     const blob = new Blob([dataString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
@@ -40,7 +54,7 @@ function exportToJsonFile() {
     URL.revokeObjectURL(url);
 }
 
-function importFromJsonFile(event) {
+const importFromJsonFile = (event) => {
   const fileReader = new FileReader();
   fileReader.onload = function(event) {
     try {
@@ -66,6 +80,7 @@ const showRandomQuote = () => {
     quoteDisplay.innerHTML = `"${quotes[randomIndex].text}" — ${quotes[randomIndex].category}`;
 }
 
+// Input for random quote
 const createAddQuoteForm = () => {
     const textInput = document.createElement("input");
     textInput.type = "text";
@@ -87,6 +102,7 @@ const createAddQuoteForm = () => {
     formContainer.appendChild(addButton);
 }
 
+// Creating random quote
 const addQuote = () => {
     const newQuote = document.getElementById("newQuoteText");
     const newQuoteCategory = document.getElementById("newQuoteCategory");
@@ -99,11 +115,12 @@ const addQuote = () => {
         return;
     }
 
-    quotes.push({ text: newText, category: newCategory });
+    quotes.push({ category: newCategory, text: newText });
     newQuote.value = "";
     newQuoteCategory.value = "";
     alert("Quote added successfully!");
 }
 
+populateCategories()
 quoteBtn.addEventListener("click", showRandomQuote);
 createAddQuoteForm()
