@@ -34,7 +34,6 @@ const populateCategories = () => {
     option.value = "all";
     option.textContent = "All Categories";
     categoryFilter.appendChild(option);
-    // categoryFilter.text
     const uniqueCategory = [...new Set(quotes.map(q => q.category))];
     console.log(uniqueCategory)
     uniqueCategory.map(category => {
@@ -139,6 +138,7 @@ const addQuote = () => {
 
     quotes.push({ category: newCategory, text: newText });
     populateCategories()
+    saveQuotes()
     newQuote.value = "";
     newQuoteCategory.value = "";
     alert("Quote added successfully!");
