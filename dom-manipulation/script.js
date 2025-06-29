@@ -29,16 +29,38 @@ const quotes = JSON.parse(localStorage.getItem("quotes")) || [
 
 const populateCategories = () => {
     const categoryFilter = document.getElementById("categoryFilter");
-    quotes.map(category => {
+    categoryFilter.innerHTML = "";
+    const option = document.createElement("option");
+    option.value = "all";
+    option.textContent = "All Categories";
+    categoryFilter.appendChild(option);
+    // categoryFilter.text
+    const uniqueCategory = [...new Set(quotes.map(q => q.category))];
+    console.log(uniqueCategory)
+    uniqueCategory.map(category => {
         const option = document.createElement("option");
-        option.value = category.category;
-        option.textContent = category.category;
+        option.value = category;
+        option.textContent = category;
         categoryFilter.appendChild(option);
     });
 }
 
 const filterQuotes = () => {
+    quoteDisplay.innerHTML = "";
+    const selectedCategory = categoryFilter.value;
+    console.log(selectedCategory);
 
+    const filtered = selectedCategory === "all"
+        ? quotes
+        : quotes.filter(q => q.category === selectedCategory);
+
+    if (filtered.length === 0) {
+        quoteDisplay.textContent = "No quotes available in this category.";
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * filtered.length);
+    quoteDisplay.textContent = filtered[randomIndex].text;
 }
 
 const exportToJsonFile = () => {
@@ -56,7 +78,7 @@ const exportToJsonFile = () => {
 
 const importFromJsonFile = (event) => {
   const fileReader = new FileReader();
-  fileReader.onload = function(event) {
+  fileReader.onload = (event) => {
     try {
       const importedQuotes = JSON.parse(event.target.result);
 
@@ -116,6 +138,7 @@ const addQuote = () => {
     }
 
     quotes.push({ category: newCategory, text: newText });
+    populateCategories()
     newQuote.value = "";
     newQuoteCategory.value = "";
     alert("Quote added successfully!");
