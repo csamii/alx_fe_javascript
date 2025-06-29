@@ -21,6 +21,10 @@ const displayQuote = document.getElementById("quoteDisplay");
 const quoteBtn = document.getElementById("newQuote");
 const formContainer = document.getElementById("formContainer");
 
+const saveQuotes = () => {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
+
 
 // Display random quote
 const showRandomQuote = () => {
