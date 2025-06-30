@@ -81,13 +81,13 @@ const importFromJsonFile = (event) => {
     try {
       const importedQuotes = JSON.parse(event.target.result);
 
-      if (Array.isArray(importedQuotes)) {
-        quotes.push(...importedQuotes.filter(q => typeof q === "string" && q.trim()));
-        saveQuotes();
-        alert("Quotes imported successfully!");
-      } else {
-        alert("Invalid format: JSON must be an array of strings.");
-      }
+        if (Array.isArray(importedQuotes)) {
+            quotes.push(...importedQuotes.filter(q => typeof q === "string" && q.trim()));
+            saveQuotes();
+            alert("Quotes imported successfully!");
+        } else {
+            alert("Invalid format: JSON must be an array of strings.");
+        }
     } catch (err) {
       alert("Error reading JSON file.");
     }
@@ -142,6 +142,10 @@ const addQuote = () => {
     newQuote.value = "";
     newQuoteCategory.value = "";
     alert("Quote added successfully!");
+}
+
+const fetchQuotesFromServer = () => {
+    
 }
 
 populateCategories()
