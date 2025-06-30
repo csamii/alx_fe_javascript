@@ -156,9 +156,12 @@ async function fetchQuotesFromServer() {
         });
         const data = await response.json();
     } catch (error) {
-    //     console.error("Error fetching from server:", error);
-    //     return [];
+        console.error("Error fetching from server:", error);
     }
+}
+
+function syncQuotes() {
+    
 }
 
 populateCategories()
