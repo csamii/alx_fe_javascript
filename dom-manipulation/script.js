@@ -144,8 +144,24 @@ const addQuote = () => {
     alert("Quote added successfully!");
 }
 
-function fetchQuotesFromServer() {
+async function fetchQuotesFromServer() {
+    const serverUrl = "https://jsonplaceholder.typicode.com/posts";
+    try {
+        const response = await fetch(serverUrl);
+        const data = await response.json();
 
+    //     // Simulate quotes by extracting title/body from mock API
+    //     const serverQuotes = data.slice(0, 5).map(post => ({
+    //     text: post.title,
+    //     category: "Server",
+    //     updatedAt: Date.now()
+    //     }));
+
+    //     return serverQuotes;
+    } catch (error) {
+    //     console.error("Error fetching from server:", error);
+    //     return [];
+    }
 }
 
 populateCategories()
