@@ -161,8 +161,10 @@ async function fetchQuotesFromServer() {
 }
 
 function syncQuotes() {
-    
+
 }
+
+setInterval(syncQuotes, 3000);
 
 populateCategories()
 quoteBtn.addEventListener("click", showRandomQuote);
