@@ -144,8 +144,8 @@ const addQuote = () => {
     alert("Quote added successfully!");
 }
 
-const fetchQuotesFromServer = () => {
-    
+function fetchQuotesFromServer() {
+
 }
 
 populateCategories()
