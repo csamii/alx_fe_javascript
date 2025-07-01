@@ -161,7 +161,13 @@ async function fetchQuotesFromServer() {
 }
 
 function syncQuotes() {
-
+    fetchQuotesFromServer()
+    .then(() => {
+        console.log("Quotes synced with server!");
+    })
+    .catch(error => {
+        console.error("Sync failed:", error);
+    });
 }
 
 setInterval(syncQuotes, 3000);
